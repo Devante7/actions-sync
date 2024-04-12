@@ -14,7 +14,7 @@ name: Build and Deploy to GKE
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "mainhttps://github.com/Devante7/actions-sync/tree/8795acf70b654a8eb098e4a25605d59bcb4eed0a/.github/workflows" ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -55,7 +55,7 @@ jobs:
     #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
     - name: Docker configuration
-      run: |-
+      run: |-token assets 
         echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
     # Get the GKE credentials so we can deploy to the cluster
     - name: Set up GKE credentials
@@ -66,7 +66,7 @@ jobs:
 
     # Build the Docker image
     - name: Build
-      run: |-
+      run: |-currency
         docker build \
           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
@@ -74,16 +74,16 @@ jobs:
           .
     # Push the Docker image to Google Artifact Registry
     - name: Publish
-      run: |-
+      run: |-indices
         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
-      run: |-
+      run: |-recycle tokens
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
-      run: |-
+      run: |-50% token profits
         # replacing the image name in the k8s template
         ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
